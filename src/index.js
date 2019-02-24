@@ -2,38 +2,38 @@ module.exports = function solveSudoku(matrix) {
   function findZero() {
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {
-        if (matrix[row][col] === 0) {
-          return { row: [row], col: [col] };
+        if (matrix[row][col] == 0) {
+          return [row, col];
         }
       }
     }
   }
 
   function fillTable(table, value) {
-    matrix[table.row][table.col] = value;
+    matrix[table[0]][table[1]] = value;
   }
 
   function nullTable(table) {
     fillTable(table, 0);
   }
-
+  
   function checkValidity(table, value) {
-    if (matrix[table.row].some(val => val === value)) {
+    if (matrix[table[0]].some(val => val == value)) {
       return false;
     }
 
-    if (matrix.some(row => row[table.col] === value)) {
+    if (matrix.some(row => row[table[1]] == value)) {
       return false;
     }
 
     let [squareRowStart, squareColStart] = [
-      Math.floor(table.row / 3) * 3,
-      Math.floor(table.col / 3) * 3
+      Math.floor(table[0] / 3) * 3,
+      Math.floor(table[1] / 3) * 3
     ];
 
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
-        if (matrix[squareRowStart + row][squareColStart + col] === value) {
+        if (matrix[squareRowStart + row][squareColStart + col] == value) {
           return false;
         }
       }
